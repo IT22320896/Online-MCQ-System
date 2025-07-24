@@ -1,10 +1,19 @@
-export default function App() {
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import ExamList from "./pages/ExamList";
+import { useState } from "react";
+
+function App() {
+  const [user, setUser] = useState(null);
+
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold text-blue-600 mb-4">Tailwind CSS is working! 🎉</h1>
-      <button className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
-        Click Me
-      </button>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login setUser={setUser} />} />
+         <Route path="/exams" element={<ExamList />} />
+      </Routes>
+    </Router>
   );
 }
+
+export default App;
