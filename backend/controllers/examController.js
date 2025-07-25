@@ -12,4 +12,22 @@ const getExamQuestions = async (req, res) => {
   res.json(questions);
 };
 
-export { getAllExams, getExamQuestions };
+const addExams = async (req, res) => {
+  try {
+    const exam = await Exam.create(req.body);
+    res.json(exam);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+const addQuestions = async (req, res) => {
+  try {
+    const question = await Question.create(req.body);
+    res.json(question);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+export { getAllExams, getExamQuestions, addQuestions, addExams };
