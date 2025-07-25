@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 
 import examRoutes from "./routes/examRoutes.js";
 import resultRoutes from "./routes/resultRoutes.js";
+import loginRoutes from "./routes/loginRoutes.js";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 
 app.use("/api/exams", examRoutes);
 app.use("/api/results", resultRoutes);
+app.use("/api/login", resultRoutes);
 
 const PORT = process.env.PORT || 5000;
 
