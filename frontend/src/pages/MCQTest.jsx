@@ -25,7 +25,10 @@ const MCQTest = ({ user }) => {
     );
     submitAnswers(id, { userId: user.id, answers: formatted }).then((res) => {
       navigate(`/result/${res.data.resultId}`, {
-        state: { score: res.data.score },
+        state: {
+          score: res.data.score,
+          answers: res.data.answers,
+        },
       });
     });
   };

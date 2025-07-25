@@ -9,3 +9,4 @@ export const submitAnswers = (examId, payload) =>
   axios.post(`${BASE_URL}/results/submit/${examId}`, payload);
 export const getResults = (userId) =>
   axios.get(`${BASE_URL}/results/${userId}`);
+export const login = (email) => axios.post(`${BASE_URL}/login`, { email });

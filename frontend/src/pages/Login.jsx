@@ -1,18 +1,28 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { login } from "../api";
 
 const Login = ({ setUser }) => {
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    const mockUser = {
-      id: "u1",
-      name,
-      email: `${name.toLowerCase()}@test.com`,
-    };
-    setUser(mockUser);
-    navigate("/exams");
+  const handleLogin = async () => {
+    try {
+      const response = await login(email);
+      const user = response.data;
+      setUser(user);
+      navigate("/exams");
+    } catch (error) {
+      console.error(
+        "Login failed:",
+        error.response?.data?.message || error.message
+      );
+      alert(
+        "Login failed: " +
+          (error.response?.data?.message || "Something went wrong")
+      );
+    }
   };
 
   return (
@@ -21,10 +31,10 @@ const Login = ({ setUser }) => {
         <h2 className="text-xl font-bold mb-4">Login</h2>
         <input
           type="text"
-          placeholder="Enter your name"
+          placeholder="Enter your email"
           className="border p-2 w-full mb-4"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <button
           onClick={handleLogin}

@@ -8,6 +8,7 @@ const submitAnswers = async (req, res) => {
 
   let score = 0;
   const answerDocs = [];
+  const detailedAnswers = [];
 
   for (let ans of answers) {
     const question = await Question.findById(ans.questionId);
@@ -19,6 +20,14 @@ const submitAnswers = async (req, res) => {
       selectedOption: ans.selectedOption,
       isCorrect,
     });
+
+    detailedAnswers.push({
+      questionText: question.questionText,
+      options: question.options,
+      selectedOption: ans.selectedOption,
+      correctOption: question.correctOption,
+      isCorrect,
+    });
   }
 
   const result = await Result.create({ userId, examId, score });
@@ -27,7 +36,11 @@ const submitAnswers = async (req, res) => {
     await Answer.create({ ...ans, resultId: result._id });
   }
 
-  res.json({ resultId: result._id, score });
+  res.json({
+    resultId: result._id,
+    score,
+    answers: detailedAnswers,
+  });
 };
 
 const getUserResults = async (req, res) => {
